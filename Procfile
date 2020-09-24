@@ -1,1 +1,1 @@
-web: java <i class="fas fa-warehouse    "></i> Project-1.0-SNAPSHOT.war
+web: java -war target/Project-1.0-SNAPSHOT.war
