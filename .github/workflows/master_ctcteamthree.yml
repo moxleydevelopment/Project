@@ -29,6 +29,5 @@ jobs:
         app-name: 'ctcteamthree'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_c2a4f1ee4e164cdeab6816474bb2a068 }}
-        package: '${{ github.workspace }}/target/*.jar'
+        package: '${{ github.workspace }}\target\*.jar'
        
-    - name: PublishBuildArtifacts@1
