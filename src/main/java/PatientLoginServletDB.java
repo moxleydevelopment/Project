@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -25,6 +26,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(urlPatterns = {"/PatientLoginServletDB"})
 public class PatientLoginServletDB extends HttpServlet {
+    
+    static final String DBPATH = "C:\\Users\\Timothy\\Desktop\\Fall 2020\\Capstone Class\\NewProj\\Project\\src\\main\\resources\\ChiropractorOfficeDB.accdb";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,15 +47,15 @@ public class PatientLoginServletDB extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
             Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + 
-                "//Users//donyamoxley//ctc//ChiropractorOfficeDB.accdb");
+                DBPATH);
             id = request.getParameter("customerId"); 
             password = request.getParameter("password");
             if(!"".equals(id) && !"".equals(password)){
                 Statement stmt = null;
                 stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery("SELECT * FROM Patients WHERE id='"+id+"'"); 
+                ResultSet rs = stmt.executeQuery("SELECT * FROM Login WHERE ID='"+id+"'"); 
                     while(rs.next()){
-                        if(password.equals(rs.getString("passwd"))){
+                        if(password.equals(rs.getString("password"))){
                             
                             out.println("<!DOCTYPE html>");
                             out.println("<html>");
