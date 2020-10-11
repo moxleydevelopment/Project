@@ -120,11 +120,14 @@ public class Appointment {
      */
     public void updateDB(){
         try {
-            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-            Connection con = DriverManager.getConnection("jdbc:ucanaccess://ChiropractorOfficeMDB.mdb");
-            
-            System.out.println("Attempting to update patient record in database.");
-            
+            Connection con;
+            Class.forName("org.postgresql.Driver");
+            if( "/app".equals(System.getenv("HOME"))){
+                    //System.getenv("JDBC_DATABASE_URL");
+                    con = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "root");
+                }else{
+                    con = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "root");
+                }
             Statement statement = con.createStatement();
             String sql = String.format("UPDATE Appointments SET apptDate = '%s', doctId = '%s', timeslot = '%d' WHERE patId = '%s';", apptDate, doctId, timeSlot, patId);
             System.out.println("SQL String: " + sql);
@@ -144,11 +147,14 @@ public class Appointment {
      */
     public void insertDB(String inputApptDate, String inputPatId, String inputDoctId, int inputTimeSlot){
         try {
-            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-            Connection con = DriverManager.getConnection("jdbc:ucanaccess://ChiropractorOfficeMDB.mdb");
-            
-            System.out.println("Connected to DB.");
-            
+            Connection con;
+            Class.forName("org.postgresql.Driver");
+            if( "/app".equals(System.getenv("HOME"))){
+                    //System.getenv("JDBC_DATABASE_URL");
+                    con = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "root");
+                }else{
+                    con = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "root");
+                }
             Statement statement = con.createStatement();
             String sql = String.format("INSERT INTO Appointments VALUES ('%s', '%d', '%s', '%s');", inputApptDate, inputTimeSlot, inputPatId, inputDoctId);
             System.out.println("SQL String: " + sql);

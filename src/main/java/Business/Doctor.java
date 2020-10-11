@@ -60,9 +60,14 @@ public class Doctor {
     public void selectDB(String id) throws Exception{
         try {
             //this line must be added to work with glassfish
-            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-            Connection con = DriverManager.getConnection("jdbc:ucanaccess://ChiropractorOfficeMDB.mdb");
-            
+            Connection con;
+            Class.forName("org.postgresql.Driver");
+             if( "/app".equals(System.getenv("HOME"))){
+                     //System.getenv("JDBC_DATABASE_URL");
+                     con = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "root");
+                 }else{
+                     con = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "root");
+                 }
             System.out.println("Connected to DB.");
             
             Statement statement = con.createStatement();
@@ -96,10 +101,14 @@ public class Doctor {
     public void insertDB(String IDIn, String pwdIn, String nameIn, String emailIn, int officeNumIn){
         try {
             Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-            Connection con = DriverManager.getConnection("jdbc:ucanaccess://ChiropractorOfficeMDB.mdb");
-            
-            System.out.println("Connected to DB.");
-            
+            Connection con;
+            Class.forName("org.postgresql.Driver");
+            if( "/app".equals(System.getenv("HOME"))){
+                    //System.getenv("JDBC_DATABASE_URL");
+                    con = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "root");
+                }else{
+                    con = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "root");
+                }
             Statement statement = con.createStatement();
             String sql = String.format("INSERT INTO Doctors VALUES ('%s', '%s', '%s', '%s', '%d');", IDIn, pwdIn, nameIn, emailIn, officeNumIn);
             System.out.println("SQL String: " + sql);
@@ -115,9 +124,14 @@ public class Doctor {
      */
     public void deleteDB(){
         try {
-            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-            Connection con = DriverManager.getConnection("jdbc:ucanaccess://ChiropractorOfficeMDB.mdb");
-            
+            Connection con;
+            Class.forName("org.postgresql.Driver");
+            if( "/app".equals(System.getenv("HOME"))){
+                    //System.getenv("JDBC_DATABASE_URL");
+                    con = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "root");
+                }else{
+                    con = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "root");
+                }
             System.out.println("Connected to DB.");
             
             Statement statement = con.createStatement();
@@ -139,9 +153,14 @@ public class Doctor {
      */
         public void updateDB(){
         try {
-            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-            Connection con = DriverManager.getConnection("jdbc:ucanaccess://ChiropractorOfficeMDB.mdb");
-            
+            Connection con;
+            Class.forName("org.postgresql.Driver");
+            if( "/app".equals(System.getenv("HOME"))){
+                    //System.getenv("JDBC_DATABASE_URL");
+                    con = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "root");
+                }else{
+                    con = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "root");
+                }
             System.out.println("Connected to DB. Updating doctor...");
             
             Statement statement = con.createStatement();

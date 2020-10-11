@@ -17,30 +17,35 @@ import java.sql.Statement;
 public class Patient {
     private String patId;
     private String password;
-    private String name;
+    private String firstName;
+    private String lastName;
     private String address;
     private String email;
     private String insCo;
     
     public Patient(){
-        this("", "", "", "", "", "");
+        this("", "", "", "", "", "","");
     }
     /**
      * Creates a new patient object.
      * @param idIn A string representing the patient's ID.
      * @param pwdIn A string representing the patient's password.
-     * @param nameIn A string representing the patient's name.
+     * @param firstName
+     * @param lastName
      * @param addressIn A string representing the patient's address.
      * @param emailIn A string representing the patient's email address.
      * @param insCoIn A string representing the patient's insurance company. 
      */
-    public Patient(String idIn, String pwdIn, String nameIn, String addressIn, String emailIn, String insCoIn){
+    public Patient(String idIn, String pwdIn, String firstName, String lastName, String addressIn, String emailIn, String insCoIn){
         patId = idIn;
         password = pwdIn;
-        name = nameIn;
+        firstName = firstName;
+        lastName = lastName;
         address = addressIn;
         email = emailIn;
         insCo = insCoIn;
+        
+        
     }
     
     /**
@@ -50,7 +55,7 @@ public class Patient {
         System.out.println("---Patient Info---");
         System.out.println("PatID    : " + patId);
         System.out.println("Password  : " + password); 
-        System.out.println("Name: " + name);
+        System.out.println("Name: " + firstName);
         System.out.println("Address   : " + address);
         System.out.println("Email     : " + email);
         System.out.println("Insurance     : " + insCo);
@@ -64,21 +69,29 @@ public class Patient {
     public void selectDB(String id) throws Exception{
         try {
             //this line must be added to work with glassfish
-            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-            Connection con = DriverManager.getConnection("jdbc:ucanaccess://ChiropractorOfficeMDB.mdb");
+            Connection con;
+            Class.forName("org.postgresql.Driver");
+            if( "/app".equals(System.getenv("HOME"))){
+                    //System.getenv("JDBC_DATABASE_URL");
+                    con = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "root");
+                }else{
+                    con = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "root");
+                }
+            
             
             System.out.println("Connected to DB.");
             
             Statement statement = con.createStatement();
-            String sql = "SELECT * FROM Patients where patId = '" + id + "'";
+            String sql = "SELECT * FROM patients where patient_id = '" + id + "'";
             ResultSet rs = statement.executeQuery(sql);
             rs.next();
             patId = rs.getString(6);
-            password = rs.getString(7);
-            name = rs.getString(1);
-            address = rs.getString(2);
-            email = rs.getString(3);
-            insCo = rs.getString(4);
+            password = rs.getString(5);
+            firstName = rs.getString(3);
+            lastName = rs.getString(4);
+            address = rs.getString(1);
+            email = rs.getString(2);
+            insCo = rs.getString(7);
             rs = null;
             
             con.close();
@@ -95,20 +108,28 @@ public class Patient {
      * Inserts a row into the database with the provided information.
      * @param IDIn A string representing the patient's ID.
      * @param pwdIn A string representing the patient's password.
-     * @param nameIn A string representing the patient's name.
+     * @param firstName
+     * @param lastName
      * @param addressIn A string representing the patient's address.
      * @param emailIn  A string representing the patient's email address.
      * @param insCoIn  A string representing the patient's insurance company.
      */
-    public void insertDB(int IDIn, String pwdIn, String nameIn, String addressIn, String emailIn, String insCoIn){
+    public void insertDB(String IDIn, String pwdIn, String firstName, String lastName, String addressIn, String emailIn, String insCoIn){
         try {
-            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-            Connection con = DriverManager.getConnection("jdbc:ucanaccess://ChiropractorOfficeMDB.mdb");
+            
+           Connection con;
+           Class.forName("org.postgresql.Driver");
+            if( "/app".equals(System.getenv("HOME"))){
+                    //System.getenv("JDBC_DATABASE_URL");
+                    con = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "root");
+                }else{
+                    con = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "root");
+                }
             
             System.out.println("Connected to DB.");
             
             Statement statement = con.createStatement();
-            String sql = String.format("INSERT INTO Patients VALUES ('%d', '%s', '%s', '%s', '%s', '%s');", IDIn, pwdIn, nameIn, addressIn, emailIn, insCoIn);
+            String sql = String.format("INSERT INTO Patients (patId, password, firstName, lastName, address, email, insCo) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s');", IDIn, pwdIn, firstName, lastName, addressIn, emailIn, insCoIn);
             System.out.println("SQL String: " + sql);
             statement.execute(sql);  
             con.close();
@@ -122,8 +143,14 @@ public class Patient {
      */
     public void deleteDB(){
         try {
-            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-            Connection con = DriverManager.getConnection("jdbc:ucanaccess://ChiropractorOfficeMDB.mdb");
+           Connection con;
+           Class.forName("org.postgresql.Driver");
+            if( "/app".equals(System.getenv("HOME"))){
+                    //System.getenv("JDBC_DATABASE_URL");
+                    con = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "root");
+                }else{
+                    con = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "root");
+                }
             
             System.out.println("Connected to DB.");
             
@@ -134,7 +161,7 @@ public class Patient {
             con.close();
             patId = "";
             password = "";
-            name = "";
+            firstName = "";
             address = "";
             email = "";
             insCo = "";
@@ -148,13 +175,19 @@ public class Patient {
      */
     public void updateDB(){
         try {
-            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-            Connection con = DriverManager.getConnection("jdbc:ucanaccess://ChiropractorOfficeMDB.mdb");
+            Connection con;
+            Class.forName("org.postgresql.Driver");
+            if( "/app".equals(System.getenv("HOME"))){
+                    //System.getenv("JDBC_DATABASE_URL");
+                    con = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "root");
+                }else{
+                    con = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "root");
+                }
             
             System.out.println("Attempting to update patient record in database.");
             
             Statement statement = con.createStatement();
-            String sql = String.format("UPDATE Patients SET passwd = '%s', firstName = '%s', addr = '%s', email = '%s', insCo = '%s' WHERE patId = '%s';", password, name, address, email, insCo, patId);
+            String sql = String.format("UPDATE Patients SET passworid = '%s', firstName = '%s', lastName = '%s', addr = '%s', email = '%s', insCo = '%s' WHERE patId = '%s';", password, firstName, lastName,  address, email, insCo, patId);
             System.out.println("SQL String: " + sql);
             statement.execute(sql);  
             con.close();
@@ -199,16 +232,28 @@ public class Patient {
      * Gets the first name of the current patient.
      * @return  A string representing the patient's first name.
      */
-    public String getName(){
-        return name;
+    public String getLastName(){
+        return lastName;
     }
     
     /**
      * Sets the first name of the current patient.
      * @param input A string representing the patient's first name. 
      */
-    public void setName(String input){
-        name = input;
+    public void setLastName(String input){
+        lastName = input;
+    }
+    
+    public String getfirstName(){
+        return firstName;
+    }
+    
+    /**
+     * Sets the first name of the current patient.
+     * @param input A string representing the patient's first name. 
+     */
+    public void setFirstName(String input){
+        firstName = input;
     }
     
     /**
@@ -261,7 +306,8 @@ public class Patient {
     
     public static void main(String[] args) throws Exception{
         Patient c1 = new Patient();
-        c1.selectDB("A900");
+        c1.selectDB("P101");
+        //c1.insertDB("P101", "password", "firstName", "lastName", "addressIn", "emailIn", "insCoIn");
 	c1.display();
     }
 }
