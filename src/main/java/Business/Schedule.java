@@ -12,6 +12,8 @@ public class Schedule {
     String date;
     String docId;
     
+    static final String DBPATH = "C:\\Users\\Timothy\\Desktop\\Fall 2020\\Capstone Class\\NewProj\\Project\\src\\main\\resources\\ChiropractorOfficeDB.accdb";
+    
     public Schedule(){
         this("", "");
     }

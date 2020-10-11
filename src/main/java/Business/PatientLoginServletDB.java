@@ -6,15 +6,9 @@ package Business;
  * and open the template in the editor.
  */
 
-import Business.Patient;
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.lang.System.out;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -31,6 +25,8 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(urlPatterns = {"/PatientLoginServletDB"})
 public class PatientLoginServletDB extends HttpServlet {
+    
+    static final String DBPATH = "C:\\Users\\Timothy\\Desktop\\Fall 2020\\Capstone Class\\NewProj\\Project\\src\\main\\resources\\ChiropractorOfficeDB.accdb";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

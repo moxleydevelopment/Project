@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 
-
     /**
      * The {@code Appointment} class is a data model for appointments. 
      * 
@@ -32,6 +31,8 @@ public class Appointment {
      * Stores the procedure code.
      */
     int timeSlot;
+    
+    static final String DBPATH = "C:\\Users\\Timothy\\Desktop\\Fall 2020\\Capstone Class\\NewProj\\Project\\src\\main\\resources\\ChiropractorOfficeDB.accdb";
 
     public Appointment(){
         this("", "", "", 0);

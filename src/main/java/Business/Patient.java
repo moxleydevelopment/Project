@@ -23,6 +23,8 @@ public class Patient {
     private String email;
     private String insCo;
     
+    static final String DBPATH = "C:\\Users\\Timothy\\Desktop\\Fall 2020\\Capstone Class\\NewProj\\Project\\src\\main\\resources\\ChiropractorOfficeDB.accdb";
+    
     public Patient(){
         this("", "", "", "", "", "","");
     }

@@ -15,7 +15,7 @@ CIST 2931 - Team 3
         <div id="index_container" class='container-fluid'>
             <div class='row'>
                 <nav class="navbar navbar-light  col-12" style="background-color:rgba(12, 11, 95, 0.5);">
-                    <a class="navbar-brand">ChatChiro</a>
+                    <a class="navbar-brand">ChattChiro</a>
                     <form class="form-inline">
                       <button class="btn btn-danger my-2 my-sm-0" type="submit">Admin</button>
                     </form>
