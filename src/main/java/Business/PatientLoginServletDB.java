@@ -26,7 +26,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet(urlPatterns = {"/PatientLoginServletDB"})
 public class PatientLoginServletDB extends HttpServlet {
     
-    static final String DBPATH = "C:\\Users\\Timothy\\Desktop\\Fall 2020\\Capstone Class\\NewProj\\Project\\src\\main\\resources\\ChiropractorOfficeDB.accdb";
+    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
