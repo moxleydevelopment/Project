@@ -22,6 +22,8 @@ CIST 2931 - Team 3
             </div> 
             <div class='row align-items-center justify-content-center my-5'>
                 <p class='h2'>ChattChiro</p>
+                <%=System.getenv()%>
+                
             </div>
              <div class='row align-items-center justify-content-center' >
                  <div class="col-4" style="background-color:rgba(12, 11, 95, 0.5); border-radius: 15px 30px;">

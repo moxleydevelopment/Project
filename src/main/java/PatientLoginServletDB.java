@@ -41,6 +41,7 @@ public class PatientLoginServletDB extends HttpServlet {
             throws ServletException, IOException, SQLException, ClassNotFoundException {
         response.setContentType("text/html;charset=UTF-8");
         String id, password;
+        
         try (PrintWriter out = response.getWriter()) {
             Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
             Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + 
