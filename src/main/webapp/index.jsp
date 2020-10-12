@@ -39,7 +39,7 @@ CIST 2931 - Team 3
                               <input type="password" name="password" class="form-control" id="exampleInputPassword1">
                             </div>
                             <button type="submit" class="btn btn-primary">Login</button>
-                            <a href="" class="btn btn-primary">Sign Up!</a>
+                            <a href="patients/patientregistration.jsp" class="btn btn-primary">Sign Up!</a>
                         </div>
                     </form>
                  </div>
