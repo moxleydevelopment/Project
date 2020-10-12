@@ -5,6 +5,12 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="Business.Patient"%> 
+ <% 
+            Patient p1;
+            p1 = (Patient)session.getAttribute("p1");
+           
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -22,7 +28,7 @@
                  </nav>
             </div> 
            
-            
+            <h>Hello <%=p1.getfirstName()%></h>
             
         </div>
        
