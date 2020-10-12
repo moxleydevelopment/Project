@@ -28,7 +28,7 @@
                  </nav>
             </div> 
            
-            <h>Hello <%=p1.getfirstName()%></h>
+            <h class='h1'>Hello <%=p1.getfirstName()%></h>
             
         </div>
        
