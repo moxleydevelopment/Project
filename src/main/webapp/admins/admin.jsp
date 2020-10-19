@@ -30,10 +30,6 @@
 
             <% if (a1 != null){ %>
                 <h1>Admin Panel</h1>
-                    <p><label>Email: </label><input type="text" name="email"></p>
-                    <p><label>Office Number: </label><input type="text" name="office"></p>
-                    <input type="submit">
-                </form>
 
                 <div class='row align-items-center justify-content-center' >
                     <div class="col-4" style="background-color:rgba(12, 11, 95, 0.5); border-radius: 15px 30px;">
@@ -64,7 +60,7 @@
                                 <label for="chiroOfficeNum">Office Number</label>
                                 <input name='chiroOfficeNum' type="text" class="form-control" id="chiroOfficeNum" aria-describedby="chiroOfficeNum">
                               </div>
-                               <button type="submit" class="btn btn-primary">Login</button>
+                               <button type="submit" class="btn btn-primary">Add Chiropractor</button>
                            </div>
                        </form>
                     </div>
