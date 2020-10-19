@@ -26,9 +26,7 @@
                 <nav class="navbar navbar-light  col-12" style="background-color:rgba(12, 11, 95, 0.5);">
                     <a class="navbar-brand">ChattChiro</a>
                  </nav>
-            </div> 
-           
-            <h class='h1'>Hello Admin <%=a1.getFirstName()%></h>
+            </div>
 
             <% if (a1 != null){ %>
                 <h1>Admin Panel</h1>
@@ -39,7 +37,7 @@
 
                 <div class='row align-items-center justify-content-center' >
                     <div class="col-4" style="background-color:rgba(12, 11, 95, 0.5); border-radius: 15px 30px;">
-                        <form action="AddChiropractor" method='post' class='card  border-0 bg-transparent text-white' >
+                        <form action="AddChiropractorServlet" method='post' class='card  border-0 bg-transparent text-white' >
                            <div class='card-body my-5'>
                             <h2>Add Chiropractor:</h2>
                                <div class="form-group">
