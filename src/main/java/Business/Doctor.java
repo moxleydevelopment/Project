@@ -19,7 +19,7 @@ public class Doctor {
     private String firstName;
     private String lastName;
     private String email;
-    private int officeNum;
+    private String officeNum;
     
     public Doctor(){
         this("", "", "", "", "", 0);
@@ -33,7 +33,7 @@ public class Doctor {
      * @param emailIn A string representing the doctor's email address.
      * @param officeIn A string representing the doctor's office number.
      */
-    public Doctor(String idIn, String pwdIn, String firstNameIn, String lastNameIn, String emailIn, int officeIn){
+    public Doctor(String idIn, String pwdIn, String firstNameIn, String lastNameIn, String emailIn, String officeIn){
         doctId = idIn;
         password = pwdIn;
         firstName = firstNameIn;
@@ -82,7 +82,7 @@ public class Doctor {
                 firstName = rs.getString(3);
                 lastName = rs.getString(4);
                 email = rs.getString(5);
-                officeNum = rs.getInt(6);
+                officeNum = rs.getString(6);
                 con.close();
                 return true;
             } else {
@@ -108,7 +108,7 @@ public class Doctor {
      * @param emailIn A string representing the doctor's email address.
      * @param officeNumIn A string representing the doctor's office number.
      */
-    public void insertDB(String IDIn, String pwdIn, String firstNameIn, String lastNameIn, String emailIn, int officeNumIn){
+    public void insertDB(String IDIn, String pwdIn, String firstNameIn, String lastNameIn, String emailIn, String officeNumIn){
         try {
             Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
             Connection con;
@@ -120,7 +120,7 @@ public class Doctor {
                     con = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "root");
                 }
             Statement statement = con.createStatement();
-            String sql = String.format("INSERT INTO \"Chiropractor\" VALUES ('%s', '%s', '%s', '%s', '%s', '%d');", IDIn, pwdIn, firstNameIn, lastNameIn, emailIn, officeNumIn);
+            String sql = String.format("INSERT INTO \"Chiropractor\" VALUES ('%s', '%s', '%s', '%s', '%s', '%s');", IDIn, pwdIn, firstNameIn, lastNameIn, emailIn, officeNumIn);
             System.out.println("SQL String: " + sql);
             statement.execute(sql);  
             con.close();
@@ -154,7 +154,7 @@ public class Doctor {
             firstName = "";
             lastName = "";
             email = "";
-            officeNum = 0;
+            officeNum = "";
         } catch (Exception e){
             System.out.println(e);
         } 
@@ -261,7 +261,7 @@ public class Doctor {
      * Gets doctor's office number.
      * @return A string representing the doctor's office number.
      */
-    public int getOfficeNum(){
+    public String getOfficeNum(){
         return officeNum;
     }
     
@@ -269,7 +269,7 @@ public class Doctor {
      * Sets doctor's office number.
      * @param input A string representing the doctor's office number.
      */
-    public void setOfficeNum(int input){
+    public void setOfficeNum(String input){
         officeNum = input;
     }
     
