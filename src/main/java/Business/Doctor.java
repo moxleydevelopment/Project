@@ -22,7 +22,7 @@ public class Doctor {
     private String officeNum;
     
     public Doctor(){
-        this("", "", "", "", "", 0);
+        this("", "", "", "", "", "");
     }
     
     /**
