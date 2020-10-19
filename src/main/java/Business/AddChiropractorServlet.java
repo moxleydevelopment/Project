@@ -60,19 +60,15 @@ public class AddChiropractorServlet extends HttpServlet {
             if(!"".equals(id) && !"".equals(password) && !"".equals(fName) && !"".equals(lName) && !"".equals(email) && !"".equals(officeNum)){
                 Doctor d1 = new Doctor();
                 d1.insertDB(id, password, fName, lName, email, officeNum);
-                if(d1.selectDB(id)){
-                    if(!password.equals(d1.getPwd())){
-                        out.println("<!DOCTYPE html>");
-                        out.println("<html>");
-                        out.println("<head>");
-                        out.println("<title>Add Chiropractor Servlet</title>");            
-                        out.println("</head>");
-                        out.println("<body>");
-                        out.println("<h1>Chiropractor successfully added.</h1>");
-                        out.println("</body>");
-                        out.println("</html>"); 
-                    }
-                }
+                out.println("<!DOCTYPE html>");
+                out.println("<html>");
+                out.println("<head>");
+                out.println("<title>Add Chiropractor Servlet</title>");            
+                out.println("</head>");
+                out.println("<body>");
+                out.println("<h1>Chiropractor successfully added.</h1>");
+                out.println("</body>");
+                out.println("</html>"); 
             }
         }
     }
