@@ -51,35 +51,90 @@ public class PatientLoginServletDB extends HttpServlet {
             
             if(!"".equals(id) && !"".equals(password)){
                 Patient p1 = new Patient();
-                p1.selectDB(id);
-                HttpSession ses1;
-                if(!password.equals(p1.getPwd())){
-                    out.println("<!DOCTYPE html>");
-                    out.println("<html>");
-                    out.println("<head>");
-                    out.println("<title>Servlet LoginServlet</title>");            
-                    out.println("</head>");
-                    out.println("<body>");
-                    out.println("<h1>Invalid Login"
-                        +  p1.getPwd()  + "</h1>");
-                    out.println("</body>");
-                    out.println("</html>"); 
-                }else{
-                    
-                    ses1 = request.getSession();
-                    ses1.setAttribute("p1", p1);
-                    RequestDispatcher rd = request.getRequestDispatcher("/patients/patient.jsp");
-                    rd.forward(request, response);
-                }
-                
-            }else{
+                if(p1.selectDB(id)){
+                    HttpSession ses1;
+                    if(!password.equals(p1.getPwd())){
+                        out.println("<!DOCTYPE html>");
+                        out.println("<html>");
+                        out.println("<head>");
+                        out.println("<title>Servlet LoginServlet</title>");            
+                        out.println("</head>");
+                        out.println("<body>");
+                        out.println("<h1>Invalid Password: "
+                            +  p1.getPwd()  + "</h1>");
+                        out.println("</body>");
+                        out.println("</html>"); 
+                    } else {
+                        ses1 = request.getSession();
+                        ses1.setAttribute("p1", p1);
+                        RequestDispatcher rd = request.getRequestDispatcher("/patients/patient.jsp");
+                        rd.forward(request, response);
+                    }
+                } else {
+                    System.out.println("No patient found with that ID. Trying chiropractor...");
+                    Doctor d1 = new Doctor();
+                    if(d1.selectDB(id)){
+                        HttpSession ses1;
+                        if(!password.equals(d1.getPwd())){
+                            out.println("<!DOCTYPE html>");
+                            out.println("<html>");
+                            out.println("<head>");
+                            out.println("<title>Servlet LoginServlet</title>");            
+                            out.println("</head>");
+                            out.println("<body>");
+                            out.println("<h1>Invalid Password: "
+                                +  d1.getPwd()  + "</h1>");
+                            out.println("</body>");
+                            out.println("</html>"); 
+                        } else {
+                            ses1 = request.getSession();
+                            ses1.setAttribute("d1", d1);
+                            RequestDispatcher rd = request.getRequestDispatcher("/chiropractors/chiropractor.jsp");
+                            rd.forward(request, response);
+                        }
+                    } else {
+                        System.out.println("No chiropractor found with that ID. Trying admin...");
+                        Admin a1 = new Admin();
+                        if(a1.selectDB(id)){
+                            HttpSession ses1;
+                            if(!password.equals(a1.getPwd())){
+                                out.println("<!DOCTYPE html>");
+                                out.println("<html>");
+                                out.println("<head>");
+                                out.println("<title>Servlet LoginServlet</title>");            
+                                out.println("</head>");
+                                out.println("<body>");
+                                out.println("<h1>Invalid Password: "
+                                    +  a1.getPwd()  + "</h1>");
+                                out.println("</body>");
+                                out.println("</html>"); 
+                            } else {
+                                ses1 = request.getSession();
+                                ses1.setAttribute("a1", a1);
+                                RequestDispatcher rd = request.getRequestDispatcher("/admins/admin.jsp");
+                                rd.forward(request, response);
+                            }
+                        } else {
+                            out.println("<!DOCTYPE html>");
+                            out.println("<html>");
+                            out.println("<head>");
+                            out.println("<title>Servlet LoginServlet</title>");            
+                            out.println("</head>");
+                            out.println("<body>");
+                            out.println("<h1>Username not found.</h1>");
+                            out.println("</body>");
+                            out.println("</html>"); 
+                        }
+                    }
+                }        
+            } else {
                out.println("<!DOCTYPE html>");
                 out.println("<html>");
                 out.println("<head>");
                 out.println("<title>Servlet LoginServlet</title>");            
                 out.println("</head>");
                 out.println("<body>");
-                out.println("<h1>Invalid Login Else" + "</h1>");
+                out.println("<h1>You must enter a username and password.</h1>");
                 out.println("</body>");
                 out.println("</html>"); 
             }

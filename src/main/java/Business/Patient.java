@@ -24,10 +24,8 @@ public class Patient {
     private String email;
     private String insCo;
     
-    static final String DBPATH = "C:\\Users\\Timothy\\Desktop\\Fall 2020\\Capstone Class\\NewProj\\Project\\src\\main\\resources\\ChiropractorOfficeDB.accdb";
-    
     public Patient(){
-        this("", "", "", "", "", "","");
+        this("", "", "", "", "", "", "");
     }
     /**
      * Creates a new patient object.
@@ -39,11 +37,11 @@ public class Patient {
      * @param emailIn A string representing the patient's email address.
      * @param insCoIn A string representing the patient's insurance company. 
      */
-    public Patient(String idIn, String pwdIn, String firstName, String lastName, String addressIn, String emailIn, String insCoIn){
+    public Patient(String idIn, String pwdIn, String firstNameIn, String lastNameIn, String addressIn, String emailIn, String insCoIn){
         patId = idIn;
         password = pwdIn;
-        firstName = firstName;
-        lastName = lastName;
+        firstName = firstNameIn;
+        lastName = lastNameIn;
         address = addressIn;
         email = emailIn;
         insCo = insCoIn;
@@ -69,7 +67,7 @@ public class Patient {
      * @param id A string representing the patient's ID.
      * @throws Exception 
      */
-    public void selectDB(String id) throws Exception{
+    public boolean selectDB(String id) throws Exception{
         try {
             //this line must be added to work with glassfish
             Connection con;
@@ -88,24 +86,32 @@ public class Patient {
             System.out.println("Connected to DB.");
             
             Statement statement = con.createStatement();
-            String sql = "SELECT * FROM patients where patient_id = '" + id + "'";
+            String sql = "SELECT * FROM \"Patients\" where id = '" + id + "'";
             ResultSet rs = statement.executeQuery(sql);
-            rs.next();
-            patId = rs.getString(6);
-            password = rs.getString(5);
-            firstName = rs.getString(3);
-            lastName = rs.getString(4);
-            address = rs.getString(1);
-            email = rs.getString(2);
-            insCo = rs.getString(7);
-            rs = null;
+            if (rs.next()){
+                patId = rs.getString(2);
+                password = rs.getString(1);
+                firstName = rs.getString(3);
+                lastName = rs.getString(4);
+                //address = rs.getString(1);
+                email = rs.getString(5);
+                //insCo = rs.getString(7);
+                rs = null;
+                con.close();
+                return true;
+            } else {
+                con.close();
+                return false;
+            }
             
-            con.close();
+            
+            
         } catch (Exception e){
             if (e.toString().contains("ResultSet is empty")) {
                 throw e;
             } else {
-                System.out.println(e);
+                System.out.println("Resultset error: " + e);
+                return false;
             }
         }
     }
@@ -139,7 +145,7 @@ public class Patient {
             System.out.println("Connected to DB.");
             
             Statement statement = con.createStatement();
-            String sql = String.format("INSERT INTO Patients (patId, password, firstName, lastName, address, email, insCo) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s');", IDIn, pwdIn, firstName, lastName, addressIn, emailIn, insCoIn);
+            String sql = String.format("INSERT INTO \"Patients\" (password, id, firstName, lastName, email) VALUES ('%s', '%s', '%s', '%s', '%s');", pwdIn, IDIn, firstName, lastName, emailIn);
             System.out.println("SQL String: " + sql);
             statement.execute(sql);  
             con.close();
@@ -168,7 +174,7 @@ public class Patient {
             System.out.println("Connected to DB.");
             
             Statement statement = con.createStatement();
-            String sql = String.format("DELETE FROM Patients WHERE patId = '%s';", patId);
+            String sql = String.format("DELETE FROM \"Patients\" WHERE id = '%s';", patId);
             System.out.println("SQL String: " + sql);
             statement.execute(sql);  
             con.close();
@@ -203,7 +209,7 @@ public class Patient {
             System.out.println("Attempting to update patient record in database.");
             
             Statement statement = con.createStatement();
-            String sql = String.format("UPDATE Patients SET passworid = '%s', firstName = '%s', lastName = '%s', addr = '%s', email = '%s', insCo = '%s' WHERE patId = '%s';", password, firstName, lastName,  address, email, insCo, patId);
+            String sql = String.format("UPDATE \"Patients\" SET password = '%s', firstName = '%s', lastName = '%s', email = '%s' WHERE id = '%s';", password, firstName, lastName, email, patId);
             System.out.println("SQL String: " + sql);
             statement.execute(sql);  
             con.close();

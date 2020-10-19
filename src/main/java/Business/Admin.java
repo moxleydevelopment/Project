@@ -10,31 +10,31 @@ import java.sql.Statement;
  */
 
 /**
- * A data model representing the Doctor data type.
+ * A data model representing the Admin data type.
  * @author Timothy
  */
-public class Doctor {
-    private String doctId;
+public class Admin {
+    private String adminId;
     private String password;
     private String firstName;
     private String lastName;
     private String email;
     private int officeNum;
     
-    public Doctor(){
+    public Admin(){
         this("", "", "", "", "", 0);
     }
     
     /**
-     * Creates a new doctor object.
-     * @param idIn A string representing the doctor's ID.
-     * @param pwdIn A string representing the doctor's password.
-     * @param nameIn A string representing the doctor's name.
-     * @param emailIn A string representing the doctor's email address.
-     * @param officeIn A string representing the doctor's office number.
+     * Creates a new admin object.
+     * @param idIn A string representing the admin's ID.
+     * @param pwdIn A string representing the admin's password.
+     * @param nameIn A string representing the admin's name.
+     * @param emailIn A string representing the admin's email address.
+     * @param officeIn A string representing the admin's office number.
      */
-    public Doctor(String idIn, String pwdIn, String firstNameIn, String lastNameIn, String emailIn, int officeIn){
-        doctId = idIn;
+    public Admin(String idIn, String pwdIn, String firstNameIn, String lastNameIn, String emailIn, int officeIn){
+        adminId = idIn;
         password = pwdIn;
         firstName = firstNameIn;
         lastName = lastNameIn;
@@ -46,8 +46,8 @@ public class Doctor {
      * A method which displays all of the fields belonging to this object via {@code System.out.println}
      */
     public void display(){
-        System.out.println("---doctor Info---");
-        System.out.println("DoctID    : " + doctId);
+        System.out.println("---admin Info---");
+        System.out.println("AdminID    : " + adminId);
         System.out.println("Password  : " + password); 
         System.out.println("First Name: " + firstName);
         System.out.println("Last Name: " + firstName);
@@ -57,7 +57,7 @@ public class Doctor {
     
     /**
      * Pulls data out of database and populates object with said data.
-     * @param id String representing the doctor's ID.
+     * @param id String representing the admin's ID.
      * @throws Exception 
      */
     public boolean selectDB(String id) throws Exception{
@@ -74,10 +74,10 @@ public class Doctor {
             System.out.println("Connected to DB.");
             
             Statement statement = con.createStatement();
-            String sql = "SELECT * FROM \"Chiropractor\" where id = '" + id + "'";
+            String sql = "SELECT * FROM \"Admin\" where id = '" + id + "'";
             ResultSet rs = statement.executeQuery(sql);
             if(rs.next()){
-                doctId = rs.getString(1);
+                adminId = rs.getString(1);
                 password = rs.getString(2);
                 firstName = rs.getString(3);
                 lastName = rs.getString(4);
@@ -102,11 +102,11 @@ public class Doctor {
     
     /**
      * Creates a new row in the database table.
-     * @param IDIn A string representing the doctor's ID.
-     * @param pwdIn A string representing the doctor's password.
-     * @param nameIn A string representing the doctor's name.
-     * @param emailIn A string representing the doctor's email address.
-     * @param officeNumIn A string representing the doctor's office number.
+     * @param IDIn A string representing the admin's ID.
+     * @param pwdIn A string representing the admin's password.
+     * @param nameIn A string representing the admin's name.
+     * @param emailIn A string representing the admin's email address.
+     * @param officeNumIn A string representing the admin's office number.
      */
     public void insertDB(String IDIn, String pwdIn, String firstNameIn, String lastNameIn, String emailIn, int officeNumIn){
         try {
@@ -120,7 +120,7 @@ public class Doctor {
                     con = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "root");
                 }
             Statement statement = con.createStatement();
-            String sql = String.format("INSERT INTO \"Chiropractor\" VALUES ('%s', '%s', '%s', '%s', '%s', '%d');", IDIn, pwdIn, firstNameIn, lastNameIn, emailIn, officeNumIn);
+            String sql = String.format("INSERT INTO \"Admin\" VALUES ('%s', '%s', '%s', '%s', '%s', '%d');", IDIn, pwdIn, firstNameIn, lastNameIn, emailIn, officeNumIn);
             System.out.println("SQL String: " + sql);
             statement.execute(sql);  
             con.close();
@@ -145,11 +145,11 @@ public class Doctor {
             System.out.println("Connected to DB.");
             
             Statement statement = con.createStatement();
-            String sql = String.format("DELETE FROM \"Chiropractor\" WHERE id = '%s';", doctId);
+            String sql = String.format("DELETE FROM \"Admin\" WHERE id = '%s';", adminId);
             System.out.println("SQL String: " + sql);
             statement.execute(sql);  
             con.close();
-            doctId = "";
+            adminId = "";
             password = "";
             firstName = "";
             lastName = "";
@@ -172,10 +172,10 @@ public class Doctor {
                 }else{
                     con = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "root");
                 }
-            System.out.println("Connected to DB. Updating doctor...");
+            System.out.println("Connected to DB. Updating admin...");
             
             Statement statement = con.createStatement();
-            String sql = String.format("UPDATE \"Chiropractor\" SET password = '%s', firstName = '%s', lastName = '%s', email = '%s', office = '%d' WHERE id = '%s';", password, firstName, lastName, email, officeNum, doctId);
+            String sql = String.format("UPDATE \"Admin\" SET password = '%s', firstName = '%s', lastName = '%s', email = '%s', office = '%d' WHERE id = '%s';", password, firstName, lastName, email, officeNum, adminId);
             System.out.println("SQL String: " + sql);
             statement.execute(sql);  
             con.close();
@@ -186,40 +186,40 @@ public class Doctor {
     
         
     /**
-     * Gets doctor's ID.
-     * @return A string representing the doctor's ID.
+     * Gets admin's ID.
+     * @return A string representing the admin's ID.
      */
     public String getID(){
-        return doctId;
+        return adminId;
     }
     
     /**
-     * Sets doctor's ID.
-     * @param input A string representing the doctor's ID.
+     * Sets admin's ID.
+     * @param input A string representing the admin's ID.
      */
     public void setID(String input){
-        doctId = input;
+        adminId = input;
     }
     
     /**
-     * Gets doctor's password.
-     * @return A string representing the doctor's password.
+     * Gets admin's password.
+     * @return A string representing the admin's password.
      */
     public String getPwd(){
         return password;
     }
     
     /**
-     * Sets doctor's password.
-     * @param input A string representing the doctor's password.
+     * Sets admin's password.
+     * @param input A string representing the admin's password.
      */
     public void setPwd(String input){
         password = input;
     }
     
     /**
-     * Gets doctor's name
-     * @return A string representing the doctor's name.
+     * Gets admin's name
+     * @return A string representing the admin's name.
      */
     public String getFirstName(){
         return firstName;
@@ -230,8 +230,8 @@ public class Doctor {
     }
     
     /**
-     * Sets doctor's name
-     * @param input A string representing the doctor's name.
+     * Sets admin's name
+     * @param input A string representing the admin's name.
      */
     public void setFirstName(String input){
         firstName = input;
@@ -242,40 +242,40 @@ public class Doctor {
     }
     
     /**
-     * Gets doctor's email address.
-     * @return A string representing the doctor's email address.
+     * Gets admin's email address.
+     * @return A string representing the admin's email address.
      */
     public String getEmail(){
         return email;
     }
     
     /**
-     * Sets doctor's email address.
-     * @param input A string representing the doctor's email address.
+     * Sets admin's email address.
+     * @param input A string representing the admin's email address.
      */
     public void setEmail(String input){
         email = input;
     }
     
     /**
-     * Gets doctor's office number.
-     * @return A string representing the doctor's office number.
+     * Gets admin's office number.
+     * @return A string representing the admin's office number.
      */
     public int getOfficeNum(){
         return officeNum;
     }
     
     /**
-     * Sets doctor's office number.
-     * @param input A string representing the doctor's office number.
+     * Sets admin's office number.
+     * @param input A string representing the admin's office number.
      */
     public void setOfficeNum(int input){
         officeNum = input;
     }
     
     public static void main(String[] args) throws Exception{
-        Doctor d1 = new Doctor();
-        d1.selectDB("D201");
-	d1.display();
+        //Admin a1 = new Admin();
+        //a1.selectDB("A201");
+	    //d1.display();
     }
 }
